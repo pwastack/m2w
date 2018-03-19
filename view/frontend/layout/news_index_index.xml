@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+        <!--
+        /**
+         * Copyright © 2015 Magento. All rights reserved.
+         * See COPYING.txt for license details.
+         */
+        -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<body>
+    <referenceBlock name="page.main.title" remove="true" />
+
+
+    <referenceBlock name="head.additional">
+        <block class="M2Dev\Wp\Block\Head" name="wordpress.head" template="M2Dev_Wp::head.phtml" />
+    </referenceBlock>
+    <referenceBlock name="content">
+        <block class="M2Dev\Wp\Block\Listing" name="wp.posts" as="wp.posts" template="M2Dev_Wp::index.phtml" />
+    </referenceBlock>
+    <referenceBlock name="div.sidebar.main">
+        <block class="M2Dev\Wp\Block\Listing" name="wp.sidebar.posts" as="wp.sidebar.posts" template="M2Dev_Wp::sidebar.phtml" />
+    </referenceBlock>
+
+</body>
+    <head>
+
+    </head>
+
+
+
+</page>

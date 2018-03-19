@@ -1,0 +1,22 @@
+{
+    "name": "m2dev/wordpress",
+    "description": "Magento2Developer.com Integrate native wordpress into magento frontend",
+    "type": "magento2-module",
+    "version": "1",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Le Tuan",
+            "homepage": "https://www.magento2developer.com/",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "M2Dev\\Wp\\": ""
+        }
+    }
+}

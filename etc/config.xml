@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <m2dev_wp>
+            <general>
+                <blog_name>Blog</blog_name>
+                <wordpress_folder>/pub/wordpress</wordpress_folder>
+            </general>
+        </m2dev_wp>
+    </default>
+</config>

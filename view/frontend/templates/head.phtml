@@ -1,0 +1,23 @@
+<?php
+
+
+remove_action('wp_head','_wp_render_title_tag',1);
+//remove_action('wp_head','wp_enqueue_scripts',1);
+remove_action('wp_head','noindex',1);
+remove_action('wp_head','feed_links',2);
+remove_action('wp_head','feed_links_extra',3);
+remove_action('wp_head','rsd_link',10);
+remove_action('wp_head','wlwmanifest_link',10);
+remove_action('wp_head','adjacent_posts_rel_link_wp_head',10);
+remove_action('wp_head','locale_stylesheet',10);
+remove_action('wp_head','rel_canonical',10);
+remove_action('wp_head','wp_generator',10);
+remove_action('wp_head','wp_shortlink_wp_head',10);
+remove_action('wp_head','wp_print_head_scripts',9);
+
+$wp_script = wp_scripts();
+$wp_script->done[]  = 'jquery';
+
+
+wp_head();
+define('IN_WORDPRESS',false);
