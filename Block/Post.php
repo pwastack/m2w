@@ -5,13 +5,5 @@ use Magento\Framework\View\Element\Template;
 
 class Post extends Template
 {
-
-
-
     protected $_post;
-
-
-
-
-
 }
