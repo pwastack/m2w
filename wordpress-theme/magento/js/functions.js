@@ -5,124 +5,130 @@
  * footer widgets and Featured Content slider
  *
  */
-( function( $ ) {
-	var body    = $( 'body' ),
-		_window = $( window );
 
-	// Enable menu toggle for small screens.
-	( function() {
-		var nav = $( '#primary-navigation' ), button, menu;
-		if ( ! nav ) {
-			return;
-		}
+require(['jquery'], function ($) {
 
-		button = nav.find( '.menu-toggle' );
-		if ( ! button ) {
-			return;
-		}
+    ( function( $ ) {
+        var body    = $( 'body' ),
+            _window = $( window );
 
-		// Hide button if menu is missing or empty.
-		menu = nav.find( '.nav-menu' );
-		if ( ! menu || ! menu.children().length ) {
-			button.hide();
-			return;
-		}
+        // Enable menu toggle for small screens.
+        ( function() {
+            var nav = $( '#primary-navigation' ), button, menu;
+            if ( ! nav ) {
+                return;
+            }
 
-		$( '.menu-toggle' ).on( 'click.twentyfourteen', function() {
-			nav.toggleClass( 'toggled-on' );
-		} );
-	} )();
+            button = nav.find( '.menu-toggle' );
+            if ( ! button ) {
+                return;
+            }
 
-	/*
-	 * Makes "skip to content" link work correctly in IE9 and Chrome for better
-	 * accessibility.
-	 *
-	 * @link http://www.nczonline.net/blog/2013/01/15/fixing-skip-to-content-links/
-	 */
-	_window.on( 'hashchange.twentyfourteen', function() {
-		var element = document.getElementById( location.hash.substring( 1 ) );
+            // Hide button if menu is missing or empty.
+            menu = nav.find( '.nav-menu' );
+            if ( ! menu || ! menu.children().length ) {
+                button.hide();
+                return;
+            }
 
-		if ( element ) {
-			if ( ! /^(?:a|select|input|button|textarea)$/i.test( element.tagName ) ) {
-				element.tabIndex = -1;
-			}
+            $( '.menu-toggle' ).on( 'click.twentyfourteen', function() {
+                nav.toggleClass( 'toggled-on' );
+            } );
+        } )();
 
-			element.focus();
+        /*
+         * Makes "skip to content" link work correctly in IE9 and Chrome for better
+         * accessibility.
+         *
+         * @link http://www.nczonline.net/blog/2013/01/15/fixing-skip-to-content-links/
+         */
+        _window.on( 'hashchange.twentyfourteen', function() {
+            var element = document.getElementById( location.hash.substring( 1 ) );
 
-			// Repositions the window on jump-to-anchor to account for header height.
-			window.scrollBy( 0, -80 );
-		}
-	} );
+            if ( element ) {
+                if ( ! /^(?:a|select|input|button|textarea)$/i.test( element.tagName ) ) {
+                    element.tabIndex = -1;
+                }
 
-	$( function() {
-		// Search toggle.
-		$( '.search-toggle' ).on( 'click.twentyfourteen', function( event ) {
-			var that    = $( this ),
-				wrapper = $( '.search-box-wrapper' );
+                element.focus();
 
-			that.toggleClass( 'active' );
-			wrapper.toggleClass( 'hide' );
+                // Repositions the window on jump-to-anchor to account for header height.
+                window.scrollBy( 0, -80 );
+            }
+        } );
 
-			if ( that.is( '.active' ) || $( '.search-toggle .screen-reader-text' )[0] === event.target ) {
-				wrapper.find( '.search-field' ).focus();
-			}
-		} );
+        $( function() {
+            // Search toggle.
+            $( '.search-toggle' ).on( 'click.twentyfourteen', function( event ) {
+                var that    = $( this ),
+                    wrapper = $( '.search-box-wrapper' );
 
-		/*
-		 * Fixed header for large screen.
-		 * If the header becomes more than 48px tall, unfix the header.
-		 *
-		 * The callback on the scroll event is only added if there is a header
-		 * image and we are not on mobile.
-		 */
-		if ( _window.width() > 781 ) {
-			var mastheadHeight = $( '#masthead' ).height(),
-				toolbarOffset, mastheadOffset;
+                that.toggleClass( 'active' );
+                wrapper.toggleClass( 'hide' );
 
-			if ( mastheadHeight > 48 ) {
-				body.removeClass( 'masthead-fixed' );
-			}
+                if ( that.is( '.active' ) || $( '.search-toggle .screen-reader-text' )[0] === event.target ) {
+                    wrapper.find( '.search-field' ).focus();
+                }
+            } );
 
-			if ( body.is( '.header-image' ) ) {
-				toolbarOffset  = body.is( '.admin-bar' ) ? $( '#wpadminbar' ).height() : 0;
-				mastheadOffset = $( '#masthead' ).offset().top - toolbarOffset;
+            /*
+             * Fixed header for large screen.
+             * If the header becomes more than 48px tall, unfix the header.
+             *
+             * The callback on the scroll event is only added if there is a header
+             * image and we are not on mobile.
+             */
+            if ( _window.width() > 781 ) {
+                var mastheadHeight = $( '#masthead' ).height(),
+                    toolbarOffset, mastheadOffset;
 
-				_window.on( 'scroll.twentyfourteen', function() {
-					if ( ( window.scrollY > mastheadOffset ) && ( mastheadHeight < 49 ) ) {
-						body.addClass( 'masthead-fixed' );
-					} else {
-						body.removeClass( 'masthead-fixed' );
-					}
-				} );
-			}
-		}
+                if ( mastheadHeight > 48 ) {
+                    body.removeClass( 'masthead-fixed' );
+                }
 
-		// Focus styles for menus.
-		$( '.primary-navigation, .secondary-navigation' ).find( 'a' ).on( 'focus.twentyfourteen blur.twentyfourteen', function() {
-			$( this ).parents().toggleClass( 'focus' );
-		} );
-	} );
+                if ( body.is( '.header-image' ) ) {
+                    toolbarOffset  = body.is( '.admin-bar' ) ? $( '#wpadminbar' ).height() : 0;
+                    mastheadOffset = $( '#masthead' ).offset().top - toolbarOffset;
 
-	_window.load( function() {
-		// Arrange footer widgets vertically.
-		if ( $.isFunction( $.fn.masonry ) ) {
-			$( '#footer-sidebar' ).masonry( {
-				itemSelector: '.widget',
-				columnWidth: function( containerWidth ) {
-					return containerWidth / 4;
-				},
-				gutterWidth: 0,
-				isResizable: true,
-				isRTL: $( 'body' ).is( '.rtl' )
-			} );
-		}
+                    _window.on( 'scroll.twentyfourteen', function() {
+                        if ( ( window.scrollY > mastheadOffset ) && ( mastheadHeight < 49 ) ) {
+                            body.addClass( 'masthead-fixed' );
+                        } else {
+                            body.removeClass( 'masthead-fixed' );
+                        }
+                    } );
+                }
+            }
 
-		// Initialize Featured Content slider.
-		if ( body.is( '.slider' ) ) {
-			$( '.featured-content' ).featuredslider( {
-				selector: '.featured-content-inner > article',
-				controlsContainer: '.featured-content'
-			} );
-		}
-	} );
-} )( jQuery );
+            // Focus styles for menus.
+            $( '.primary-navigation, .secondary-navigation' ).find( 'a' ).on( 'focus.twentyfourteen blur.twentyfourteen', function() {
+                $( this ).parents().toggleClass( 'focus' );
+            } );
+        } );
+
+        _window.load( function() {
+            // Arrange footer widgets vertically.
+            if ( $.isFunction( $.fn.masonry ) ) {
+                $( '#footer-sidebar' ).masonry( {
+                    itemSelector: '.widget',
+                    columnWidth: function( containerWidth ) {
+                        return containerWidth / 4;
+                    },
+                    gutterWidth: 0,
+                    isResizable: true,
+                    isRTL: $( 'body' ).is( '.rtl' )
+                } );
+            }
+
+            // Initialize Featured Content slider.
+            if ( body.is( '.slider' ) ) {
+                $( '.featured-content' ).featuredslider( {
+                    selector: '.featured-content-inner > article',
+                    controlsContainer: '.featured-content'
+                } );
+            }
+        } );
+    } )( jQuery );
+	
+});
+
